@@ -8,31 +8,32 @@ router.post('/register',function(req,res,next){
     // console.log(req.body)
     var username = req.body.username;
     var password = req.body.password;
-    userModel.init()
-    userModel.select(username,function(err, result){
-        if(result.length){
-            respondMsg.result.resultCode=10001;
-            respondMsg.result.detailDescription = '该账号账号已存在'
-            res.send(respondMsg.result);
-        }else{
-            userModel.init()
-            userModel.insert(username,password,function(err, result){
-                if(err){
-                    respondMsg.result.resultCode=10002;
-                    respondMsg.result.detailDescription = '注册失败'
-                    res.send(respondMsg.result);
-                }else if(!result.affectedRows){
-                    respondMsg.result.resultCode=10003;
-                    respondMsg.result.detailDescription = '注册失败'
-                    res.send(respondMsg.result);
-                }else{
-                    respondMsg.result.resultCode = 200;
-                    respondMsg.result.detailDescription = null
-                    res.send(respondMsg.result);
-                }
-            })
-        }
-    })
+    res.send('hahah')
+    // userModel.init()
+    // userModel.select(username,function(err, result){
+    //     if(result.length){
+    //         respondMsg.result.resultCode=10001;
+    //         respondMsg.result.detailDescription = '该账号账号已存在'
+    //         res.send(respondMsg.result);
+    //     }else{
+    //         userModel.init()
+    //         userModel.insert(username,password,function(err, result){
+    //             if(err){
+    //                 respondMsg.result.resultCode=10002;
+    //                 respondMsg.result.detailDescription = '注册失败'
+    //                 res.send(respondMsg.result);
+    //             }else if(!result.affectedRows){
+    //                 respondMsg.result.resultCode=10003;
+    //                 respondMsg.result.detailDescription = '注册失败'
+    //                 res.send(respondMsg.result);
+    //             }else{
+    //                 respondMsg.result.resultCode = 200;
+    //                 respondMsg.result.detailDescription = null
+    //                 res.send(respondMsg.result);
+    //             }
+    //         })
+    //     }
+    // })
     // res.send('respond with a resource');
 })
 router.post('/login',function(req,res,next){
