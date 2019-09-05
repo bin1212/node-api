@@ -40,8 +40,9 @@ router.post('/login',function(req,res,next){
     var password = req.body.password;
     userModel.init()
     userModel.select(username,function(err, result){
-        var sqlPassword = result[0].password
+        
         if(result.length){
+            var sqlPassword = result[0].password
             if(sqlPassword === password){
                 respondMsg.result.resultCode=200;
                 respondMsg.result.detailDescription = null
