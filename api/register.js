@@ -59,4 +59,7 @@ router.post('/login',function(req,res,next){
         }
     })
 })
+router.post('/test',function(req,res,next){
+    res.send('测试测试');
+})
 module.exports = router
