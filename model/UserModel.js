@@ -1,14 +1,10 @@
+var sql_config = require('../config/sql_config')
 function  UserModel(){
     var connection;
     this.init = function(){
         var mysql = require('mysql');
-        connection = mysql.createConnection({
-            host:'localhost',
-            user:'root',
-            password:'wenbin1995',
-            port:'3306',
-            database : 'mydata'
-        });
+        sql_config.database = 'mydata'
+        connection = mysql.createConnection(sql_config);
         connection.connect();
     };
     this.insert = function(username,password,callback){
