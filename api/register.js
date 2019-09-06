@@ -39,7 +39,6 @@ router.post('/login',function(req,res,next){
     var password = req.body.password;
     userModel.init()
     userModel.select(username,function(err, result){
-        console.log(err,'err',result)
         if(result.length){
             var sqlPassword = result[0].password
             if(sqlPassword === password){
