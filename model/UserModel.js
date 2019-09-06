@@ -4,6 +4,7 @@ function  UserModel(){
     this.init = function(){
         var mysql = require('mysql');
         sql_config.database = 'mydata'
+        console.log(sql_config)
         connection = mysql.createConnection(sql_config);
         connection.connect();
     };
