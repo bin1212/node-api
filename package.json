@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "export NODE_ENV=development && node ./bin/www"
+    "start": "export NODE_ENV=development && node ./bin/www",
+    "production": "export NODE_ENV=production && node ./bin/www"
   },
   "dependencies": {
     "body-parse": "^0.1.0",
