@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var UserModel = require('../model/UserModel')
 var respondMsg = require('../services/resultMsg')
+var jwt = require('jsonwebtoken')
 
 var userModel = new UserModel()
 router.post('/register',function(req,res,next){
@@ -42,9 +43,20 @@ router.post('/login',function(req,res,next){
         if(result.length){
             var sqlPassword = result[0].password
             if(sqlPassword === password){
-                respondMsg.result.resultCode=200;
-                respondMsg.result.detailDescription = null
-                res.send(respondMsg.result);
+                var token = jwt.sign(
+                    {user:result[0]},
+                    'secretbin1995',
+                    {expiresIn:3600 * 24}
+                )
+                respondMsg.ObjectResult.resultCode=200;
+                respondMsg.ObjectResult.resultContent = {
+                    access_token:token,
+                    expiresIn:3600 * 24,
+                    name:result[0].username
+                };
+                respondMsg.ObjectResult.detailDescription = null
+                res.json(respondMsg.ObjectResult)
+                // res.send(respondMsg.result);
             }else{
                 respondMsg.result.resultCode=10002;
                 respondMsg.result.detailDescription = '账号密码不匹配'
