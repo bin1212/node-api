@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var querystring = require('querystring')
+var Base64 = require('js-base64').Base64;
 var respondMsg = require('../services/resultMsg')
 var UserEditModel = require('../model/UserEditModel')
 var initData = {
@@ -13,7 +14,7 @@ var initData = {
         },
     ]
 }
-initData = JSON.stringify(initData)
+initData = Base64.encode(JSON.stringify(initData))
 var userEditModel = new UserEditModel()
 router.get('/content',function(req,res,next){
     const id = req.user.user.id
@@ -38,6 +39,8 @@ router.get('/content',function(req,res,next){
 router.put('/content/update',function(req,res,next){
     const id = req.user.user.id
     var msg = req.body.msg;
+    msg = JSON.stringify(msg)
+    console.log(msg)
     userEditModel.init()
     userEditModel.updateMsg(id,msg,function(err,result){
         if(result && !err){
