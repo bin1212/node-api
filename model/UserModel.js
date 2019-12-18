@@ -27,5 +27,26 @@ function  UserModel(){
         });
         connection.end();
     }
+    //根据id
+    this.idSelect = function(id,callback){
+        var userGetSql = 'SELECT * FROM members where id = "'+id+'"';
+
+        connection.query(userGetSql,function (err,result) {
+
+             callback(err,result);
+
+        });
+        connection.end();
+    }
+    this.updatePassword = function(id,password,callback){
+        var userAddSql = "update members set password ='" + password + "' where id = '"+id+"'";
+        var userAddSql_Params = [id,password];
+        connection.query(userAddSql,userAddSql_Params,function (err, result) {
+
+            callback(err,result);
+
+        });
+        connection.end();
+    }
 }
 module.exports = UserModel

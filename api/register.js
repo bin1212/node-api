@@ -3,6 +3,8 @@ var router = express.Router();
 var UserModel = require('../model/UserModel')
 var respondMsg = require('../services/resultMsg')
 var jwt = require('jsonwebtoken')
+var randtoken = require('rand-token');
+var blacklist = require('express-jwt-blacklist');
 
 var userModel = new UserModel()
 router.post('/register',function(req,res,next){
@@ -44,7 +46,9 @@ router.post('/login',function(req,res,next){
             var sqlPassword = result[0].password
             if(sqlPassword === password){
                 var token = jwt.sign(
-                    {user:result[0]},
+                    {   user:result[0],
+                        blackIdBin:result[0].id + '_' + randtoken.generator({ chars: '0-9' }).generate(6)
+                    },
                     'secretbin1995',
                     {expiresIn:3600 * 24}
                 )
@@ -56,7 +60,6 @@ router.post('/login',function(req,res,next){
                 };
                 respondMsg.ObjectResult.detailDescription = null
                 res.json(respondMsg.ObjectResult)
-                // res.send(respondMsg.result);
             }else{
                 respondMsg.result.resultCode=10002;
                 respondMsg.result.detailDescription = '账号密码不匹配'
@@ -68,6 +71,13 @@ router.post('/login',function(req,res,next){
             res.send(respondMsg.result);
         }
     })
+})
+router.put('/logout',function(req,res,next){
+    blacklist.revoke(req.user)
+    respondMsg.result.resultCode=200;
+    respondMsg.result.detailDescription = 'success'
+    respondMsg.result.resultContent = []
+    res.send(respondMsg.result);
 })
 router.get('/test',function(req,res,next){
     res.send('测试测试');

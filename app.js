@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var jwt = require('express-jwt')
+const blacklist = require('express-jwt-blacklist');
 // var bodyParser = require('body-parser');
 var logger = require('morgan');
 var env = require('./config/mode_env');
@@ -40,8 +41,11 @@ if(env != 'production'){
     }
   });
 }
-app.use(jwt({secret: 'secretbin1995'}).unless({
-  path: ['/api/auth/login','/api/auth/register']  //除了这些地址，其他的URL都需要验证
+blacklist.configure({
+  tokenId: 'blackIdBin',
+});
+app.use(jwt({secret: 'secretbin1995',isRevoked:blacklist.isRevoked}).unless({
+  path: noAuthUrl //除了这些地址，其他的URL都需要验证
 }));
 // app.use(function(req, res, next){
 //   if(noAuthUrl.includes(req.originalUrl)){
