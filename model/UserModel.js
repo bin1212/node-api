@@ -49,7 +49,7 @@ function  UserModel(){
         });
         connection.end();
     }
-    this.updateLoginNum = function(id,loginNum,callback){
+    this.updateLoginMsg = function(id,loginNum,callback){
         loginNum = loginNum ? loginNum+1 : 1
         var userAddSql = "update members set loginNum ='" + loginNum + "' where id = '"+id+"'";
         var userAddSql_Params = [id,loginNum];

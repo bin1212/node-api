@@ -58,11 +58,12 @@ router.post('/login',function(req,res,next){
                     access_token:token,
                     expiresIn:3600 * 24,
                     name:result[0].username,
-                    loginNum:loginNum?loginNum:0
+                    loginNum:loginNum?loginNum:0,
+                    updateTime:new Date(result[0].update_time).getTime(),
                 };
                 //更新登录次数
                 userModel.init()
-                userModel.updateLoginNum(result[0].id,loginNum,function(err, result){
+                userModel.updateLoginMsg(result[0].id,loginNum,function(err, result){
                     console.log(result)
                 })
                 respondMsg.ObjectResult.detailDescription = null
