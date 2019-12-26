@@ -17,6 +17,7 @@ function  UserModel(){
         });
         connection.end();
     }
+    
     this.select = function(name,callback){
         var userGetSql = 'SELECT * FROM members where username = "'+name+'"';
 
@@ -44,6 +45,16 @@ function  UserModel(){
         connection.query(userAddSql,userAddSql_Params,function (err, result) {
 
             callback(err,result);
+
+        });
+        connection.end();
+    }
+    this.updateLoginNum = function(id,loginNum,callback){
+        loginNum = loginNum ? loginNum+1 : 1
+        var userAddSql = "update members set loginNum ='" + loginNum + "' where id = '"+id+"'";
+        var userAddSql_Params = [id,loginNum];
+        connection.query(userAddSql,userAddSql_Params,function (err, result) {
+            if (callback) callback(err,result);
 
         });
         connection.end();

@@ -44,6 +44,7 @@ router.post('/login',function(req,res,next){
     userModel.select(username,function(err, result){
         if(result.length){
             var sqlPassword = result[0].password
+            var loginNum = result[0].loginNum
             if(sqlPassword === password){
                 var token = jwt.sign(
                     {   user:result[0],
@@ -56,8 +57,14 @@ router.post('/login',function(req,res,next){
                 respondMsg.ObjectResult.resultContent = {
                     access_token:token,
                     expiresIn:3600 * 24,
-                    name:result[0].username
+                    name:result[0].username,
+                    loginNum:loginNum?loginNum:0
                 };
+                //更新登录次数
+                userModel.init()
+                userModel.updateLoginNum(result[0].id,loginNum,function(err, result){
+                    console.log(result)
+                })
                 respondMsg.ObjectResult.detailDescription = null
                 res.json(respondMsg.ObjectResult)
             }else{
