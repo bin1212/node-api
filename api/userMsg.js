@@ -95,4 +95,13 @@ router.put('/user/change_password',function(req,res,next){
         
     })
 })
+router.get('/user/userinfo',function(req,res,next){
+    const username = req.user.user.username
+    respondMsg.ObjectResult.resultCode=200;
+    respondMsg.ObjectResult.detailDescription = ''
+    respondMsg.ObjectResult.resultContent = {
+        username
+    }
+    res.send(respondMsg.ObjectResult);
+})
 module.exports = router
