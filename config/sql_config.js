@@ -3,7 +3,7 @@ var env = require('./mode_env');
 var sql_config = {
     host:'localhost',
     user:'root',
-    password:env === 'production' ? 'Wen1995!_' : 'wenbin1995',
+    password:env === 'production' ? '123456' : '123456',
     port:'3306',
     database : ''
 }
